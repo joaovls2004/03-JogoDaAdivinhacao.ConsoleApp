@@ -6,10 +6,11 @@
 //3.Nosso jogo deve validar a tentativa do jogador e exibir uma mensagem
 //4.Nosso jogo deve permitir múltiplas tentativas
 
-using System;
+//v2
+//1. Nosso implementar a funcionalidade de Dificuldade e Tentativas limitadas
 
- // eu quero usar a biblioteca padrão do sistema relacionada a criptografia
-using System.Security.Cryptography;
+using System;// biblioteca padrão do sistema com classes genéricas
+using System.Security.Cryptography;//  biblioteca padrão do sistema relacionada a criptografia
 
 
 while(true == true)
@@ -19,19 +20,64 @@ while(true == true)
     Console.WriteLine("-----------------------------------");
     Console.WriteLine("jogo da Adivinhação");
     Console.WriteLine("-----------------------------------");
+    Console.WriteLine("Escolha o nível de Dificuldade:");
+    Console.WriteLine("-----------------------------------");
+    Console.WriteLine("1 - Fácil (10 tentativas)");
+    Console.WriteLine("2 - médio (5 tentativas)");
+    Console.WriteLine("3 - Dificuldade (3 tentativas)");
+    Console.WriteLine("-----------------------------------");
 
-    int numeroAleatorio = RandomNumberGenerator.GetInt32(1, 21);
+    Console.Write("Digite sua Escolha: ");
+    string? Dificuldade = Console.ReadLine();
 
-    Console.Write("Digite um número entre 1 e 20: ");
+    int numeroMaximo = 0;
+    int TentativasMaximas;
+
+    switch(Dificuldade)
+    {
+        case"1":
+            numeroMaximo = 20;
+            TentativasMaximas = 10;
+            break;
+
+        case"2":
+            numeroMaximo = 50;
+            TentativasMaximas = 5;
+             break;
+
+        case"3":
+            numeroMaximo = 100;
+            TentativasMaximas = 3;
+            break;
+
+        default:
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine("por favor, selecione uma Dificuldade válida.");
+            Console.Write("Digite ENTER para continuar...");
+            Console.ReadLine();
+            continue;
+    }
+
+    int numeroAleatorio = RandomNumberGenerator.GetInt32(1, numeroMaximo + 1);
+
+    for (int tentativa = 1; tentativa <= TentativasMaximas; tentativa++)
+    {
+        Console.Clear();
+        Console.WriteLine("-----------------------------------");
+        Console.WriteLine("$Tentativas{tentativa} de {TentativasMaximas}.");
+        Console.WriteLine("-----------------------------------"); 
+        Console.Write($"Digite um número entre 1 e {numeroMaximo}: ");
     string? chute = Console.ReadLine();
 
     int numeroDigitado = Convert.ToInt32(chute);
-
+   
     if(numeroDigitado == numeroAleatorio)
     {
     Console.WriteLine("-----------------------------------");
     Console.WriteLine("parabéns, você acertou!");
     Console.WriteLine("-----------------------------------");
+
+        break;
     }
     else if (numeroDigitado > numeroAleatorio)
     {
@@ -45,19 +91,26 @@ while(true == true)
     Console.WriteLine("O número digitado foi menor que o número secreto!");
     Console.WriteLine("-----------------------------------");
     } 
+       if(tentativa == TentativasMaximas)
+        {
+           Console.WriteLine($"você usou todas as suas tentativas! O número era {numeroAleatorio}.");
+           Console.WriteLine("-----------------------------------"); 
+           break;
+        }
+          Console.ReadLine();
+    }
 
-    Console.WriteLine("Deseja continuar ? (s/N): ");
-    string? opcaoContinuar = Console.ReadLine(); // nullable s S != "S"S
+    
+    Console.Write("Deseja continuar ? (s/N): ");
+    string? opcaoContinuar = Console.ReadLine(); 
 
     if(opcaoContinuar?.ToUpper() != "S")
     {
        break; 
     }
 
-    Console.ReadLine();
-
 }
 
-
+03;04
 
 
